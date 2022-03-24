@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.OrderMapper">
+    <select id="selectAll" resultType="main.model.Order">
+        select * from "order";
+    </select>
+    <insert id="insert" parameterType="main.model.Order">
+        insert into "order" values (#{patientId}, #{serviceId}, #{date});
+    </insert>
+    <delete id="delete">
+        delete from "order" where "patientId"=#{patientId} and "serviceId"=#{serviceId};
+    </delete>
+    <select id="selectById" resultType="main.model.Order">
+        select * from "order" where "patientId"=#{patientId} and "serviceId"=#{serviceId};
+    </select>
+</mapper>

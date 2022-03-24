@@ -1,36 +1,35 @@
 package main.service;
 
-import main.mapper.PatientMapper;
 import main.model.Patient;
+import main.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class PatientService {
 
     @Autowired
-    private PatientMapper patientMapper;
+    private PatientRepository patientRepository;
 
     public void create(Patient patient) {
-        patientMapper.insert(UUID.fromString(patient.getId()), patient.getName(), patient.getPassword(), patient.getMail());
+        patientRepository.insert(patient);
     }
 
     public List<Patient> read() {
-        return patientMapper.selectAll();
+        return patientRepository.selectAll();
     }
 
     public void update(Patient patient) {
-        patientMapper.update(UUID.fromString(patient.getId()), patient.getName(), patient.getPassword(), patient.getMail());
+        patientRepository.update(patient);
     }
 
     public void delete(Patient patient) {
-        patientMapper.delete(UUID.fromString(patient.getId()));
+        patientRepository.delete(patient.getId());
     }
 
-    public Patient read(UUID uuid) {
-        return patientMapper.selectById(uuid);
+    public Patient read(Integer id) {
+        return patientRepository.selectById(id);
     }
 }

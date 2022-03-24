@@ -1,32 +1,31 @@
 package main.service;
 
-import main.mapper.OrderMapper;
 import main.model.Order;
+import main.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderRepository orderRepository;
 
     public void create(Order order) {
-        orderMapper.insert(UUID.fromString(order.getPatientUUID()), UUID.fromString(order.getMedicineServiceUUID()), order.getDate());
+        orderRepository.insert(order);
     }
 
     public List<Order> read() {
-        return orderMapper.selectAll();
+        return orderRepository.selectAll();
     }
 
     public void delete(Order order) {
-        orderMapper.delete(UUID.fromString(order.getPatientUUID()), UUID.fromString(order.getMedicineServiceUUID()));
+        orderRepository.delete(order.getPatientId(), order.getServiceId());
     }
 
-    public Order read(UUID patientId, UUID serviceId) {
-        return orderMapper.selectById(patientId, serviceId);
+    public Order read(Integer patientId, Integer serviceId) {
+        return orderRepository.selectById(patientId, serviceId);
     }
 }

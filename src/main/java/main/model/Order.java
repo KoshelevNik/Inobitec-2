@@ -4,23 +4,23 @@ import java.util.Date;
 
 public class Order {
 
-    private String patient_id, service_id;
+    private Integer patientId, serviceId;
     private Date date;
 
-    public String getPatientUUID() {
-        return patient_id;
+    public Integer getPatientId() {
+        return patientId;
     }
 
-    public void setPatientUUID(String patientUUID) {
-        this.patient_id = patientUUID;
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
     }
 
-    public String getMedicineServiceUUID() {
-        return service_id;
+    public Integer getServiceId() {
+        return serviceId;
     }
 
-    public void setMedicineServiceUUID(String medicineServiceUUID) {
-        this.service_id = medicineServiceUUID;
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 
     public Date getDate() {

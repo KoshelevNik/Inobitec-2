@@ -1,44 +1,35 @@
 package main.service;
 
-import main.mapper.MedicineServiceMapper;
 import main.model.MedicineService;
+import main.repository.MedicineServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MedicineServiceService {
 
     @Autowired
-    private MedicineServiceMapper medicineServiceMapper;
+    private MedicineServiceRepository medicineServiceRepository;
 
     public void create(MedicineService medicineService) {
-        medicineServiceMapper.insert(
-                medicineService.getName(),
-                medicineService.getCost(),
-                UUID.fromString(medicineService.getId()),
-                medicineService.getDescription(),
-                medicineService.getDoctorSpecialistName()
-        );
+        medicineServiceRepository.insert(medicineService);
     }
 
     public List<MedicineService> read() {
-        return medicineServiceMapper.selectAll();
+        return medicineServiceRepository.selectAll();
     }
 
     public void update(MedicineService medicineService) {
-        medicineServiceMapper.update(
-                medicineService.getName(),
-                medicineService.getCost(),
-                UUID.fromString(medicineService.getId()),
-                medicineService.getDescription(),
-                medicineService.getDoctorSpecialistName()
-        );
+        medicineServiceRepository.update(medicineService);
     }
 
     public void delete(MedicineService medicineService) {
-        medicineServiceMapper.delete(UUID.fromString(medicineService.getId()));
+        medicineServiceRepository.delete(medicineService.getId());
+    }
+
+    public MedicineService read(Integer id) {
+        return medicineServiceRepository.selectById(id);
     }
 }

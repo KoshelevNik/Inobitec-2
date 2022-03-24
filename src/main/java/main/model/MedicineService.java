@@ -2,15 +2,15 @@ package main.model;
 
 public class MedicineService {
 
-    private Integer cost;
-    private String name, description, doctor_specialist_name, id;
+    private Integer cost, id;
+    private String name, description, doctorSpecialistName;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String uuid) {
-        this.id = uuid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getCost() {
@@ -38,10 +38,10 @@ public class MedicineService {
     }
 
     public String getDoctorSpecialistName() {
-        return doctor_specialist_name;
+        return doctorSpecialistName;
     }
 
     public void setDoctorSpecialistName(String doctorSpecialistName) {
-        this.doctor_specialist_name = doctorSpecialistName;
+        this.doctorSpecialistName = doctorSpecialistName;
     }
 }

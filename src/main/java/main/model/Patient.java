@@ -2,13 +2,14 @@ package main.model;
 
 public class Patient {
 
-    private String name, password, mail, id;
+    private String name, password, mail;
+    private Integer id;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

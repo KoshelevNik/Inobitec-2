@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.MedicineServiceMapper">
+    <select id="selectAll" resultType="main.model.MedicineService">
+        select * from "service";
+    </select>
+    <insert id="insert" parameterType="main.model.MedicineService">
+        insert into "service" values (
+        #{name},
+        #{cost},
+        #{id},
+        #{description},
+        #{doctorSpecialistName});
+    </insert>
+    <delete id="delete">
+        delete from "service" where "id"=#{id};
+    </delete>
+    <update id="update" parameterType="main.model.MedicineService">
+        update "service" set
+        "name"=#{name},
+        "cost"=#{cost},
+        "description"=#{description},
+        "doctorSpecialistName"=#{doctorSpecialistName}
+        where "id"=#{id};
+    </update>
+    <select id="selectById" resultType="main.model.MedicineService">
+        select * from "service" where "id"=#{id};
+    </select>
+</mapper>
