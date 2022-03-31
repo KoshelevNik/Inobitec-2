@@ -8,13 +8,13 @@ import java.util.List;
 @Mapper
 public interface PatientMapper {
 
-    List<Patient> selectAll();
+    List<Patient> selectAllPatients();
 
-    void insert(Patient patient);
+    void insertPatient(Patient patient);
 
-    void delete(Integer id);
+    void deletePatient(Integer id);
 
-    void update(Patient patient);
+    void updatePatient(Patient patient);
 
-    Patient selectById(Integer id);
+    Patient selectPatientById(Integer id);
 }

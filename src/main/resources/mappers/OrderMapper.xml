@@ -3,16 +3,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="main.mapper.OrderMapper">
-    <select id="selectAll" resultType="main.model.Order">
-        select * from "order";
+    <resultMap id="order" type="main.model.Order">
+        <id property="id" column="id"/>
+        <result property="patientId" column="patientId"/>
+        <result property="date" column="date"/>
+        <association property="patient" javaType="main.model.Patient">
+            <id property="id" column="patientId"/>
+            <result property="name" column="patientName"/>
+            <result property="mail" column="mail"/>
+            <result property="password" column="password"/>
+        </association>
+        <collection property="orderItems" ofType="main.model.OrderItem">
+            <result property="orderId" column="id"/>
+            <result property="medicineServiceId" column="medicineServiceId"/>
+        </collection>
+    </resultMap>
+    <select id="selectAllOrders" resultMap="order">
+        select
+        "order"."patientId",
+        "patient"."name" as "patientName",
+        "mail",
+        "password",
+        "date",
+        "order"."id",
+        "medicineService"."name",
+        "orderItem"."medicineServiceId"
+        from "order"
+        join "orderItem" on "order"."id"="orderItem"."orderId"
+        join "medicineService" on "medicineServiceId"="medicineService"."id"
+        join "patient" on "order"."patientId" = "patient"."id";
     </select>
-    <insert id="insert" parameterType="main.model.Order">
-        insert into "order" values (#{patientId}, #{serviceId}, #{date});
+    <insert id="insertOrder" parameterType="main.model.Order">
+        insert into "order" values (#{patientId}, #{date}, #{id});
+        <foreach collection="orderItems" item="orderItem">
+            insert into "orderItem" values (#{orderItem.medicineServiceId}, #{orderItem.orderId});
+        </foreach>
     </insert>
-    <delete id="delete">
-        delete from "order" where "patientId"=#{patientId} and "serviceId"=#{serviceId};
+    <delete id="deleteOrder">
+        delete from "order" where "id"=#{id};
     </delete>
-    <select id="selectById" resultType="main.model.Order">
-        select * from "order" where "patientId"=#{patientId} and "serviceId"=#{serviceId};
+    <update id="updateOrder" parameterType="main.model.Order">
+        update "order" set
+        "date"=#{date},
+        "patientId"=#{patientId}
+        where "id"=#{id};
+    </update>
+    <select id="selectOrderById" resultMap="order">
+        select
+        "order"."patientId",
+        "patient"."name" as "patientName",
+        "mail",
+        "password",
+        "date",
+        "order"."id",
+        "medicineService"."name",
+        "orderItem"."medicineServiceId"
+        from "order"
+        join "orderItem" on "order"."id"="orderItem"."orderId"
+        join "medicineService" on "medicineServiceId"="medicineService"."id"
+        join "patient" on "order"."patientId" = "patient"."id"
+        where "order"."id"=#{id};
     </select>
 </mapper>

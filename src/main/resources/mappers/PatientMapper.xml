@@ -3,23 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="main.mapper.PatientMapper">
-    <select id="selectAll" resultType="main.model.Patient">
-        select * from "patient";
+    <resultMap id="patient" type="main.model.Patient">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="mail" column="mail"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    <select id="selectAllPatients" resultMap="patient">
+        select "name", "password", "mail", "id" from "patient";
     </select>
-    <insert id="insert" parameterType="main.model.Patient">
+    <insert id="insertPatient" parameterType="main.model.Patient">
         insert into "patient" values (#{id}, #{name}, #{password}, #{mail});
     </insert>
-    <delete id="delete">
+    <delete id="deletePatient">
         delete from "patient" where "id"=#{id};
     </delete>
-    <update id="update" parameterType="main.model.Patient">
+    <update id="updatePatient" parameterType="main.model.Patient">
         update "patient" set
         "name"=#{name},
         "password"=#{password},
         "mail"=#{mail}
         where "id"=#{id}
     </update>
-    <select id="selectById" resultType="main.model.Patient">
-        select * from "patient" where "id"=#{id};
+    <select id="selectPatientById" resultMap="patient">
+        select "name", "password", "mail", "id" from "patient" where "id"=#{id};
     </select>
 </mapper>

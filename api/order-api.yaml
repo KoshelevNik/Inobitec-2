@@ -1,0 +1,508 @@
+openapi: 3.0.0
+info:
+  title: Test Order Microservice
+  version: 1.0.0
+  description: Order microservice REST API v1.0
+servers:
+  - url: http://192.168.0.7:8080
+paths:
+  /order:
+    post:
+      summary: Request for adding a new Order
+      description: Creates a new order with parameters are contained in the request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+            example:
+              id: 777
+              patientId: 10001
+              date: '2025-06-10'
+              orderItems:
+                - 
+                    medicineServiceId: 15021
+                    orderId: 777
+                - 
+                    medicineServiceId: 64505
+                    orderId: 777
+                - 
+                    medicineServiceId: 94316
+                    orderId: 777
+              patient:
+                id: 10001
+                name: 'Алексеев Алексей Алексеевич'
+                password: '54321'
+                mail: 'alex@yandex.ru'
+      responses:
+        '200':
+          description: A new order has been successfully created (200 or 201)
+        '201':
+          description: A new order has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              example:
+                id: 777
+                patientId: 10001
+                date: '2025-06-10'
+                orderItems:
+                  - 
+                      medicineServiceId: 15021
+                      orderId: 777
+                  - 
+                      medicineServiceId: 64505
+                      orderId: 777
+                  - 
+                      medicineServiceId: 94316
+                      orderId: 777
+                patient:
+                  id: 10001
+                  name: 'Алексеев Алексей Алексеевич'
+                  password: '54321'
+                  mail: 'alex@yandex.ru'
+        '500':
+          description: Server error
+    get:
+      summary: Get all orders
+      description: Returns array of orders
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              example:
+                - id: 777
+                  patientId: 10001
+                  date: '2025-06-10'
+                  orderItems:
+                    - 
+                        medicineServiceId: 15021
+                        orderId: 777
+                    - 
+                        medicineServiceId: 64505
+                        orderId: 777
+                    - 
+                        medicineServiceId: 94316
+                        orderId: 777
+                  patient:
+                    id: 10001
+                    name: 'Алексеев Алексей Алексеевич'
+                    password: '54321'
+                    mail: 'alex@yandex.ru'
+                - id: 666
+                  patientId: 10001
+                  date: '2025-06-10'
+                  orderItems:
+                    - 
+                        medicineServiceId: 15021
+                        orderId: 777
+                    - 
+                        medicineServiceId: 64505
+                        orderId: 777
+                    - 
+                        medicineServiceId: 94316
+                        orderId: 777
+                  patient:
+                    id: 10001
+                    name: 'Алексеев Алексей Алексеевич'
+                    password: '54321'
+                    mail: 'alex@yandex.ru'
+        '500':
+          description: Server error
+  /order/{id}:
+    get:
+      summary: Get the Order by id
+      description: Returns object by "orderId" or returns null
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Order object
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              example:
+                id: 777
+                patientId: 10001
+                date: '2025-06-10'
+                orderItems:
+                  - 
+                      medicineServiceId: 15021
+                      orderId: 777
+                  - 
+                      medicineServiceId: 64505
+                      orderId: 777
+                  - 
+                      medicineServiceId: 94316
+                      orderId: 777
+                patient:
+                  id: 10001
+                  name: 'Алексеев Алексей Алексеевич'
+                  password: '54321'
+                  mail: 'alex@yandex.ru'
+        '404':
+          description: A resource with requested ID not found
+        '500':
+          description: Server error
+    put:
+      summary: Request for editing the Order by id
+      description: Updates order by id with parameters are contained in request body
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Order which has to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+            example:
+              id: 777
+              patientId: 10001
+              date: '2031-12-17'
+              orderItems:
+                - 
+                    medicineServiceId: 15021
+                    orderId: 777
+                - 
+                    medicineServiceId: 64505
+                    orderId: 777
+                - 
+                    medicineServiceId: 94316
+                    orderId: 777
+              patient:
+                id: 10001
+                name: 'Алексеев Алексей Алексеевич'
+                password: '54321'
+                mail: 'alex@yandex.ru'
+      responses:
+        '200':
+          description: Order has been updated successfully
+        '500':
+          description: Server error
+    delete:
+      summary: Request for removing the Order by id
+      description: Removes order by id
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Order object to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The Order has been deleted successfully
+        '500':
+          description: Server error
+  /patient:
+    post:
+      summary: Request for adding a new Patient
+      description: Creates a new patient with parameters are contained in the request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+            example:
+              id: 10001
+              name: 'Алексеев Алексей Алексеевич'
+              password: '54321'
+              mail: 'alex@yandex.ru'
+      responses:
+        '200':
+          description: A new patient has been successfully created (200 or 201)
+        '201':
+          description: A new patient has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+              example:
+                id: 10001
+                name: 'Алексеев Алексей Алексеевич'
+                password: '54321'
+                mail: 'alex@yandex.ru'
+        '500':
+          description: Server error
+    get:
+      summary: Get all patients
+      description: Returns array of patients
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+              example:
+                - id: 10001
+                  name: 'Алексеев Алексей Алексеевич'
+                  password: '54321'
+                  mail: 'alex@yandex.ru'
+                - id: 10003
+                  name: 'Алексеев Алексей Алексеевич'
+                  password: '54321'
+                  mail: 'alex@yandex.ru'
+        '500':
+          description: Server error
+  /patient/{id}:
+    get:
+      summary: Get the Patient by id
+      description: Returns object by "id" or returns null
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Patient object
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+              example:
+                id: 10001
+                name: 'Алексеев Алексей Алексеевич'
+                password: '54321'
+                mail: 'alex@yandex.ru'
+        '404':
+          description: A resource with requested ID not found
+        '500':
+          description: Server error
+    put:
+      summary: Request for editing the Patient by id
+      description: Updates patient by id with parameters are contained in request body
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Patient which has to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patient'
+            example:
+              id: 10001
+              name: 'Алексеев Михаил Алексеевич'
+              password: '54321'
+              mail: 'alex@yandex.ru'
+      responses:
+        '200':
+          description: Patient has been updated successfully
+        '500':
+          description: Server error
+    delete:
+      summary: Request for removing the Patient by id
+      description: Removes patient by id
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the Patient object to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The Patient has been deleted successfully
+        '500':
+          description: Server error
+  /medicineService:
+    post:
+      summary: Request for adding a new MedicineService
+      description: Creates a new medicineService with parameters are contained in the request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MedicineService'
+            example:
+              id: 777
+              cost: 1200
+              name: 'ФГС'
+              description: 'ФГС'
+              doctorSpecialistName: 'Зуев Захар Зинаидович'
+      responses:
+        '200':
+          description: A new medicineService has been successfully created (200 or 201)
+        '201':
+          description: A new medicineService has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicineService'
+              example:
+                id: 777
+                cost: 1200
+                name: 'ФГС'
+                description: 'ФГС'
+                doctorSpecialistName: 'Зуев Захар Зинаидович'
+        '500':
+          description: Server error
+    get:
+      summary: Get all medicineServices
+      description: Returns array of medicineService
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+              example:
+                - id: 777
+                  cost: 1200
+                  name: 'ФГС'
+                  description: 'ФГС'
+                  doctorSpecialistName: 'Зуев Захар Зинаидович'
+                - id: 520
+                  cost: 1200
+                  name: 'ФГС'
+                  description: 'ФГС'
+                  doctorSpecialistName: 'Зуев Захар Зинаидович'
+        '500':
+          description: Server error
+  /medicineService/{id}:
+    get:
+      summary: Get the MedicineService by id
+      description: Returns object by "id" or returns null
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the MedicineService object
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicineService'
+              example:
+                id: 777
+                cost: 1200
+                name: 'ФГС'
+                description: 'ФГС'
+                doctorSpecialistName: 'Зуев Захар Зинаидович'
+        '404':
+          description: A resource with requested ID not found
+        '500':
+          description: Server error
+    put:
+      summary: Request for editing the MedicineService by id
+      description: Updates medicineService by id with parameters are contained in request body
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the MedicineService which has to be updated
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MedicineService'
+            example:
+              id: 777
+              cost: 1200
+              name: 'неФГС'
+              description: 'неФГС'
+              doctorSpecialistName: 'НеЗуев НеЗахар НеЗинаидович'
+      responses:
+        '200':
+          description: MedicineService has been updated successfully
+        '500':
+          description: Server error
+    delete:
+      summary: Request for removing the MedicineService by id
+      description: Removes medicineService by id
+      parameters:
+        - in: path
+          name: id
+          description: Numeric ID of the MedicineService object to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The MedicineService has been deleted successfully
+        '500':
+          description: Server error
+components:
+  schemas:
+    Patient:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        password:
+          type: string
+        mail:
+          type: string
+    Order:
+      type: object
+      properties:
+        patientId:
+          type: integer
+        id:
+          type: integer
+        date:
+          type: string
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        patient:
+          type: object
+          $ref: '#/components/schemas/Patient'
+    OrderItem:
+      type: object
+      properties:
+        orderId:
+          type: integer
+        medicineServiceId:
+          type: integer
+    MedicineService:
+      type: object
+      properties:
+        id:
+          type: integer
+        cost:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        doctorSpecialistName:
+          type: string
+    

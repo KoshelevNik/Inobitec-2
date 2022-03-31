@@ -13,19 +13,23 @@ public class OrderRepository {
     @Autowired
     private OrderMapper orderMapper;
 
-    public List<Order> selectAll() {
-        return orderMapper.selectAll();
+    public List<Order> selectAllOrders() {
+        return orderMapper.selectAllOrders();
     }
 
-    public void insert(Order order) {
-        orderMapper.insert(order);
+    public void insertOrder(Order order) {
+        orderMapper.insertOrder(order);
     }
 
-    public void delete(Integer patientId, Integer serviceId) {
-        orderMapper.delete(patientId, serviceId);
+    public void deleteOrder(Integer id) {
+        orderMapper.deleteOrder(id);
     }
 
-    public Order selectById(Integer patientId, Integer serviceId) {
-        return orderMapper.selectById(patientId, serviceId);
+    public void updateOrder(Order order) {
+        orderMapper.updateOrder(order);
+    }
+
+    public Order selectOrderById(Integer id) {
+        return orderMapper.selectOrderById(id);
     }
 }

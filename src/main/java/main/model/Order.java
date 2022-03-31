@@ -1,11 +1,16 @@
 package main.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
-    private Integer patientId, serviceId;
+    private Integer patientId, id;
     private Date date;
+
+    private List<OrderItem> orderItems;
+
+    private Patient patient;
 
     public Integer getPatientId() {
         return patientId;
@@ -15,12 +20,12 @@ public class Order {
         this.patientId = patientId;
     }
 
-    public Integer getServiceId() {
-        return serviceId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -29,5 +34,21 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

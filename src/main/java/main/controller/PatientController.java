@@ -14,31 +14,29 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @GetMapping("/byId")
-    public Patient patientGETById(@RequestParam Integer id) {
-        return patientService.read(id);
+    @GetMapping("/{id}")
+    public Patient getPatientById(@PathVariable Integer id) {
+        return patientService.readPatientById(id);
     }
 
-    @GetMapping("/all")
-    public List<Patient> patientGETAll() {
-        return patientService.read();
+    @GetMapping
+    public List<Patient> getAllPatient() {
+        return patientService.readAllPatients();
     }
 
-    @PostMapping("/create")
-    public Patient patientPOST(@RequestBody Patient patient) {
-        patientService.create(patient);
+    @PostMapping
+    public Patient createNewPatient(@RequestBody Patient patient) {
+        patientService.createPatient(patient);
         return patient;
     }
 
-    @DeleteMapping("/delete")
-    public Patient patientDELETE(@RequestBody Patient patient) {
-        patientService.delete(patient);
-        return patient;
+    @DeleteMapping("/{id}")
+    public boolean deletePatient(@PathVariable Integer id) {
+        return patientService.deletePatient(id);
     }
 
-    @PutMapping("/update")
-    public Patient patientPUT(@RequestBody Patient patient) {
-        patientService.update(patient);
-        return patient;
+    @PutMapping("/{id}")
+    public boolean patientPUT(@PathVariable Integer id, @RequestBody Patient patient) {
+        return patientService.updatePatient(patient, id);
     }
 }

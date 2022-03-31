@@ -8,37 +8,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/medicineService")
 public class MedicineServiceController {
 
     @Autowired
     private MedicineServiceService medicineServiceService;
 
-    @GetMapping("/byId")
-    public MedicineService medicineServiceGETById(@RequestParam Integer id) {
-        return medicineServiceService.read(id);
+    @GetMapping("/{id}")
+    public MedicineService getMedicineServiceById(@PathVariable Integer id) {
+        return medicineServiceService.readMedicineServiceById(id);
     }
 
-    @GetMapping("/all")
-    public List<MedicineService> medicineServiceGETAll() {
-        return medicineServiceService.read();
+    @GetMapping
+    public List<MedicineService> getAllMedicineServices() {
+        return medicineServiceService.readAllMedicineServices();
     }
 
-    @PostMapping("/create")
-    public MedicineService medicineServicePOST(@RequestBody MedicineService medicineService) {
-        medicineServiceService.create(medicineService);
+    @PostMapping
+    public MedicineService createMedicineService(@RequestBody MedicineService medicineService) {
+        medicineServiceService.createMedicineService(medicineService);
         return medicineService;
     }
 
-    @DeleteMapping("/delete")
-    public MedicineService medicineServiceDELETE(@RequestBody MedicineService medicineService) {
-        medicineServiceService.delete(medicineService);
-        return medicineService;
+    @DeleteMapping("/{id}")
+    public boolean deleteMedicineService(@PathVariable Integer id) {
+        return medicineServiceService.deleteMedicineService(id);
     }
 
-    @PutMapping("/update")
-    public MedicineService medicineServicePUT(@RequestBody MedicineService medicineService) {
-        medicineServiceService.update(medicineService);
-        return medicineService;
+    @PutMapping("/{id}")
+    public boolean updateMedicineService(@PathVariable Integer id, @RequestBody MedicineService medicineService) {
+        return medicineServiceService.updateMedicineService(medicineService, id);
     }
 }

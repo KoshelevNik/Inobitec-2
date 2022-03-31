@@ -8,11 +8,13 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
-    List<Order> selectAll();
+    List<Order> selectAllOrders();
 
-    void insert(Order order);
+    void insertOrder(Order order);
 
-    void delete(Integer patientId, Integer serviceId);
+    void deleteOrder(Integer id);
 
-    Order selectById(Integer patientId, Integer serviceId);
+    void updateOrder(Order order);
+
+    Order selectOrderById(Integer id);
 }

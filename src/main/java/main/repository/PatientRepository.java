@@ -13,23 +13,23 @@ public class PatientRepository {
     @Autowired
     private PatientMapper patientMapper;
 
-    public void insert(Patient patient) {
-        patientMapper.insert(patient);
+    public void insertPatient(Patient patient) {
+        patientMapper.insertPatient(patient);
     }
 
-    public void delete(Integer id) {
-        patientMapper.delete(id);
+    public void deletePatient(Integer id) {
+        patientMapper.deletePatient(id);
     }
 
-    public void update(Patient patient) {
-        patientMapper.update(patient);
+    public void updatePatient(Patient patient) {
+        patientMapper.updatePatient(patient);
     }
 
-    public List<Patient> selectAll() {
-        return patientMapper.selectAll();
+    public List<Patient> selectAllPatients() {
+        return patientMapper.selectAllPatients();
     }
 
-    public Patient selectById(Integer id) {
-        return patientMapper.selectById(id);
+    public Patient selectPatientById(Integer id) {
+        return patientMapper.selectPatientById(id);
     }
 }

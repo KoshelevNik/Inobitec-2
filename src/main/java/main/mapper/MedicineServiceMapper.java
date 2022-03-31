@@ -8,13 +8,13 @@ import java.util.List;
 @Mapper
 public interface MedicineServiceMapper {
 
-    List<MedicineService> selectAll();
+    List<MedicineService> selectAllMedicineServices();
 
-    void insert(MedicineService medicineService);
+    void insertMedicineService(MedicineService medicineService);
 
-    void delete(Integer id);
+    void deleteMedicineService(Integer id);
 
-    void update(MedicineService medicineService);
+    void updateMedicineService(MedicineService medicineService);
 
-    MedicineService selectById(Integer id);
+    MedicineService selectMedicineServiceById(Integer id);
 }

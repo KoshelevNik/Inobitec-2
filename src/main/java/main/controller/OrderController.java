@@ -14,25 +14,29 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/byId")
-    public Order orderGETById(@RequestParam Integer patientId, @RequestParam Integer serviceId) {
-        return orderService.read(patientId, serviceId);
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Integer id) {
+        return orderService.readOrderById(id);
     }
 
-    @GetMapping("/all")
-    public List<Order> orderGETAll() {
-        return orderService.read();
+    @GetMapping
+    public List<Order> getAllOrder() {
+        return orderService.readAllOrders();
     }
 
-    @PostMapping("/create")
-    public Order orderPOST(@RequestBody Order order) {
-        orderService.create(order);
+    @PostMapping
+    public Order createNewOrder(@RequestBody Order order) {
+        orderService.createOrder(order);
         return order;
     }
 
-    @DeleteMapping("/delete")
-    public Order orderDELETE(@RequestBody Order order) {
-        orderService.delete(order);
-        return order;
+    @DeleteMapping("/{id}")
+    public boolean deleteOrder(@PathVariable Integer id) {
+        return orderService.deleteOrder(id);
+    }
+
+    @PutMapping("/{id}")
+    public boolean updateOrder(@PathVariable Integer id, @RequestBody Order order) {
+        return orderService.updateOrder(order, id);
     }
 }

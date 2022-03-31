@@ -13,23 +13,23 @@ public class MedicineServiceRepository {
     @Autowired
     private MedicineServiceMapper medicineServiceMapper;
 
-    public void insert(MedicineService medicineService) {
-        medicineServiceMapper.insert(medicineService);
+    public void insertMedicineService(MedicineService medicineService) {
+        medicineServiceMapper.insertMedicineService(medicineService);
     }
 
-    public void delete(Integer id) {
-        medicineServiceMapper.delete(id);
+    public void deleteMedicineService(Integer id) {
+        medicineServiceMapper.deleteMedicineService(id);
     }
 
-    public void update(MedicineService medicineService) {
-        medicineServiceMapper.update(medicineService);
+    public void updateMedicineService(MedicineService medicineService) {
+        medicineServiceMapper.updateMedicineService(medicineService);
     }
 
-    public List<MedicineService> selectAll() {
-        return medicineServiceMapper.selectAll();
+    public List<MedicineService> selectAllMedicineServices() {
+        return medicineServiceMapper.selectAllMedicineServices();
     }
 
-    public MedicineService selectById(Integer id) {
-        return medicineServiceMapper.selectById(id);
+    public MedicineService selectMedicineServiceById(Integer id) {
+        return medicineServiceMapper.selectMedicineServiceById(id);
     }
 }

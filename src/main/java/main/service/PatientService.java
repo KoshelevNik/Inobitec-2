@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PatientService {
@@ -13,23 +14,45 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void create(Patient patient) {
-        patientRepository.insert(patient);
+    public void createPatient(Patient patient) {
+        patientRepository.insertPatient(patient);
     }
 
-    public List<Patient> read() {
-        return patientRepository.selectAll();
+    public List<Patient> readAllPatients() {
+        return patientRepository.selectAllPatients();
     }
 
-    public void update(Patient patient) {
-        patientRepository.update(patient);
+    public boolean updatePatient(Patient patient, Integer id) {
+        if (Objects.equals(patient.getId(), id)) {
+            boolean idExist = false;
+            for (Patient p : readAllPatients()) {
+                if (Objects.equals(p.getId(), id)) {
+                    idExist = true;
+                    break;
+                }
+            }
+            if (!idExist) return false;
+            patientRepository.updatePatient(patient);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void delete(Patient patient) {
-        patientRepository.delete(patient.getId());
+    public boolean deletePatient(Integer id) {
+        boolean idExist = false;
+        for (Patient p : readAllPatients()) {
+            if (Objects.equals(p.getId(), id)) {
+                idExist = true;
+                break;
+            }
+        }
+        if (!idExist) return false;
+        patientRepository.deletePatient(id);
+        return true;
     }
 
-    public Patient read(Integer id) {
-        return patientRepository.selectById(id);
+    public Patient readPatientById(Integer id) {
+        return patientRepository.selectPatientById(id);
     }
 }

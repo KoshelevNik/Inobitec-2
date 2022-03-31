@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -13,19 +14,45 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public void create(Order order) {
-        orderRepository.insert(order);
+    public void createOrder(Order order) {
+        orderRepository.insertOrder(order);
     }
 
-    public List<Order> read() {
-        return orderRepository.selectAll();
+    public List<Order> readAllOrders() {
+        return orderRepository.selectAllOrders();
     }
 
-    public void delete(Order order) {
-        orderRepository.delete(order.getPatientId(), order.getServiceId());
+    public boolean deleteOrder(Integer id) {
+        boolean idExist = false;
+        for (Order o : readAllOrders()) {
+            if (Objects.equals(o.getId(), id)) {
+                idExist = true;
+                break;
+            }
+        }
+        if (!idExist) return false;
+        orderRepository.deleteOrder(id);
+        return true;
     }
 
-    public Order read(Integer patientId, Integer serviceId) {
-        return orderRepository.selectById(patientId, serviceId);
+    public boolean updateOrder(Order order, Integer id) {
+        if (Objects.equals(order.getId(), id)) {
+            boolean idExist = false;
+            for (Order o : readAllOrders()) {
+                if (Objects.equals(o.getId(), id)) {
+                    idExist = true;
+                    break;
+                }
+            }
+            if (!idExist) return false;
+            orderRepository.updateOrder(order);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Order readOrderById(Integer id) {
+        return orderRepository.selectOrderById(id);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MedicineServiceService {
@@ -13,23 +14,45 @@ public class MedicineServiceService {
     @Autowired
     private MedicineServiceRepository medicineServiceRepository;
 
-    public void create(MedicineService medicineService) {
-        medicineServiceRepository.insert(medicineService);
+    public void createMedicineService(MedicineService medicineService) {
+        medicineServiceRepository.insertMedicineService(medicineService);
     }
 
-    public List<MedicineService> read() {
-        return medicineServiceRepository.selectAll();
+    public List<MedicineService> readAllMedicineServices() {
+        return medicineServiceRepository.selectAllMedicineServices();
     }
 
-    public void update(MedicineService medicineService) {
-        medicineServiceRepository.update(medicineService);
+    public boolean updateMedicineService(MedicineService medicineService, Integer id) {
+        if (Objects.equals(medicineService.getId(), id)) {
+            boolean idExist = false;
+            for (MedicineService ms : readAllMedicineServices()) {
+                if (Objects.equals(ms.getId(), id)) {
+                    idExist = true;
+                    break;
+                }
+            }
+            if (!idExist) return false;
+            medicineServiceRepository.updateMedicineService(medicineService);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void delete(MedicineService medicineService) {
-        medicineServiceRepository.delete(medicineService.getId());
+    public boolean deleteMedicineService(Integer id) {
+        boolean idExist = false;
+        for (MedicineService ms : readAllMedicineServices()) {
+            if (Objects.equals(ms.getId(), id)) {
+                idExist = true;
+                break;
+            }
+        }
+        if (!idExist) return false;
+        medicineServiceRepository.deleteMedicineService(id);
+        return true;
     }
 
-    public MedicineService read(Integer id) {
-        return medicineServiceRepository.selectById(id);
+    public MedicineService readMedicineServiceById(Integer id) {
+        return medicineServiceRepository.selectMedicineServiceById(id);
     }
 }
