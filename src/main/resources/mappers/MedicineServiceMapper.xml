@@ -11,7 +11,7 @@
         <result property="doctorSpecialistName" column="doctorSpecialistName"/>
     </resultMap>
     <select id="selectAllMedicineServices" resultMap="medicineService">
-        select * from "medicineService";
+        select "id", "name", "cost", "description", "doctorSpecialistName" from "medicineService";
     </select>
     <insert id="insertMedicineService" parameterType="main.model.MedicineService">
         insert into "medicineService" values (
@@ -33,6 +33,6 @@
         where "id"=#{id};
     </update>
     <select id="selectMedicineServiceById" resultMap="medicineService">
-        select * from "medicineService" where "id"=#{id};
+        select "id", "name", "cost", "description", "doctorSpecialistName" from "medicineService" where "id"=#{id};
     </select>
 </mapper>
