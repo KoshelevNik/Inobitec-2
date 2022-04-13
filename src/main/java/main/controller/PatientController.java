@@ -31,12 +31,12 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deletePatient(@PathVariable Integer id) {
-        return patientService.deletePatient(id);
+    public void deletePatient(@PathVariable Integer id) {
+        patientService.deletePatient(id);
     }
 
     @PutMapping("/{id}")
-    public boolean patientPUT(@PathVariable Integer id, @RequestBody Patient patient) {
-        return patientService.updatePatient(patient, id);
+    public void patientPUT(@PathVariable Integer id, @RequestBody Patient patient) {
+        patientService.updatePatient(patient, id);
     }
 }

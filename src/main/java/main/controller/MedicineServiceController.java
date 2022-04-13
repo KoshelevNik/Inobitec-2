@@ -31,12 +31,12 @@ public class MedicineServiceController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteMedicineService(@PathVariable Integer id) {
-        return medicineServiceService.deleteMedicineService(id);
+    public void deleteMedicineService(@PathVariable Integer id) {
+        medicineServiceService.deleteMedicineService(id);
     }
 
     @PutMapping("/{id}")
-    public boolean updateMedicineService(@PathVariable Integer id, @RequestBody MedicineService medicineService) {
-        return medicineServiceService.updateMedicineService(medicineService, id);
+    public void updateMedicineService(@PathVariable Integer id, @RequestBody MedicineService medicineService) {
+        medicineServiceService.updateMedicineService(medicineService, id);
     }
 }

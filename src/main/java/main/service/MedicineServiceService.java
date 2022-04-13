@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class MedicineServiceService {
@@ -22,34 +21,13 @@ public class MedicineServiceService {
         return medicineServiceRepository.selectAllMedicineServices();
     }
 
-    public boolean updateMedicineService(MedicineService medicineService, Integer id) {
-        if (Objects.equals(medicineService.getId(), id)) {
-            boolean idExist = false;
-            for (MedicineService ms : readAllMedicineServices()) {
-                if (Objects.equals(ms.getId(), id)) {
-                    idExist = true;
-                    break;
-                }
-            }
-            if (!idExist) return false;
-            medicineServiceRepository.updateMedicineService(medicineService);
-            return true;
-        } else {
-            return false;
-        }
+    public void updateMedicineService(MedicineService medicineService, Integer id) {
+        medicineService.setId(id);
+        medicineServiceRepository.updateMedicineService(medicineService);
     }
 
-    public boolean deleteMedicineService(Integer id) {
-        boolean idExist = false;
-        for (MedicineService ms : readAllMedicineServices()) {
-            if (Objects.equals(ms.getId(), id)) {
-                idExist = true;
-                break;
-            }
-        }
-        if (!idExist) return false;
+    public void deleteMedicineService(Integer id) {
         medicineServiceRepository.deleteMedicineService(id);
-        return true;
     }
 
     public MedicineService readMedicineServiceById(Integer id) {

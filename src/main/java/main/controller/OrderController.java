@@ -3,6 +3,7 @@ package main.controller;
 import main.model.Order;
 import main.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +32,12 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteOrder(@PathVariable Integer id) {
-        return orderService.deleteOrder(id);
+    public void deleteOrder(@PathVariable Integer id) {
+        orderService.deleteOrder(id);
     }
 
     @PutMapping("/{id}")
-    public boolean updateOrder(@PathVariable Integer id, @RequestBody Order order) {
-        return orderService.updateOrder(order, id);
+    public void updateOrder(@PathVariable Integer id, @RequestBody Order order) {
+        orderService.updateOrder(order, id);
     }
 }

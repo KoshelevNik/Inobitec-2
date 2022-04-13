@@ -1,12 +1,12 @@
 package main.service;
 
 import main.model.Order;
+import main.model.OrderItem;
 import main.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -22,34 +22,16 @@ public class OrderService {
         return orderRepository.selectAllOrders();
     }
 
-    public boolean deleteOrder(Integer id) {
-        boolean idExist = false;
-        for (Order o : readAllOrders()) {
-            if (Objects.equals(o.getId(), id)) {
-                idExist = true;
-                break;
-            }
-        }
-        if (!idExist) return false;
+    public void deleteOrder(Integer id) {
         orderRepository.deleteOrder(id);
-        return true;
     }
 
-    public boolean updateOrder(Order order, Integer id) {
-        if (Objects.equals(order.getId(), id)) {
-            boolean idExist = false;
-            for (Order o : readAllOrders()) {
-                if (Objects.equals(o.getId(), id)) {
-                    idExist = true;
-                    break;
-                }
-            }
-            if (!idExist) return false;
-            orderRepository.updateOrder(order);
-            return true;
-        } else {
-            return false;
+    public void updateOrder(Order order, Integer id) {
+        order.setId(id);
+        for (OrderItem item : order.getOrderItems()) {
+            item.setOrderId(id);
         }
+        orderRepository.updateOrder(order);
     }
 
     public Order readOrderById(Integer id) {

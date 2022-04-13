@@ -34,9 +34,12 @@
         join "patient" on "order"."patientId" = "patient"."id";
     </select>
     <insert id="insertOrder" parameterType="main.model.Order">
+        <selectKey order="BEFORE" keyProperty="id" resultType="integer">
+            select nextval('orderIdSequence');
+        </selectKey>
         insert into "order" values (#{patientId}, #{date}, #{id});
         <foreach collection="orderItems" item="orderItem">
-            insert into "orderItem" values (#{orderItem.medicineServiceId}, #{orderItem.orderId});
+            insert into "orderItem" values (#{orderItem.medicineServiceId}, #{id});
         </foreach>
     </insert>
     <delete id="deleteOrder">
