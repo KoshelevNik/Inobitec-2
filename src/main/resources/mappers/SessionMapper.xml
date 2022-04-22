@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.SessionMapper">
+    <resultMap id="session" type="main.model.Session">
+        <id property="id" column="id"/>
+        <result property="sessionGUID" column="sessionGUID"/>
+        <result property="timeoutMinutes" column="timeoutMinutes"/>
+        <result property="timeOfCreation" column="timeOfCreation"/>
+    </resultMap>
+    <select id="selectAllSessions" resultMap="session">
+        select "id", "sessionGUID", "timeoutMinutes", "timeOfCreation" from "session";
+    </select>
+    <insert id="insertSession" parameterType="main.model.Session">
+        <selectKey resultType="integer" keyProperty="id" order="BEFORE">
+            select nextval('sessionIdSequence');
+        </selectKey>
+        insert into "session" values (#{id}, #{sessionGUID}, #{timeoutMinutes}, #{timeOfCreation});
+    </insert>
+    <delete id="deleteSession">
+        delete from "session" where "id"=#{id};
+    </delete>
+    <update id="updateSession" parameterType="main.model.Session">
+        update "session" set
+        "timeOfCreation"=#{timeOfCreation},
+        "sessionGUID"=#{sessionGUID},
+        "timeoutMinutes"=#{timeoutMinutes}
+        where "id"=#{id}
+    </update>
+    <select id="selectSessionById" resultMap="session">
+        select "id", "sessionGUID", "timeoutMinutes", "timeOfCreation" from "session" where "id"=#{id};
+    </select>
+    <select id="selectSessionBySessionGUID" resultMap="session">
+        select "id", "sessionGUID", "timeoutMinutes", "timeOfCreation" from "session" where "sessionGUID"=#{sessionGUID};
+    </select>
+</mapper>

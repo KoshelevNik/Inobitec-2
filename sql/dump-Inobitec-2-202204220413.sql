@@ -5,7 +5,7 @@
 -- Dumped from database version 10.19
 -- Dumped by pg_dump version 13.3
 
--- Started on 2022-04-14 01:52:40
+-- Started on 2022-04-22 04:13:39
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2832 (class 1262 OID 16384)
+-- TOC entry 2841 (class 1262 OID 16384)
 -- Name: Inobitec-2; Type: DATABASE; Schema: -; Owner: -
 --
 
@@ -48,7 +48,7 @@ CREATE SCHEMA public;
 
 
 --
--- TOC entry 2833 (class 0 OID 0)
+-- TOC entry 2842 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
 --
@@ -148,7 +148,33 @@ CREATE SEQUENCE public.patientidsequence
 
 
 --
--- TOC entry 2822 (class 0 OID 24630)
+-- TOC entry 203 (class 1259 OID 57417)
+-- Name: session; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.session (
+    id integer NOT NULL,
+    "sessionGUID" character varying NOT NULL,
+    "timeoutMinutes" integer NOT NULL,
+    "timeOfCreation" timestamp without time zone NOT NULL
+);
+
+
+--
+-- TOC entry 204 (class 1259 OID 65609)
+-- Name: sessionidsequence; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sessionidsequence
+    START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2829 (class 0 OID 24630)
 -- Dependencies: 198
 -- Data for Name: medicineService; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -164,7 +190,7 @@ INSERT INTO public."medicineService" VALUES ('УЗИ Печени и желчн�
 
 
 --
--- TOC entry 2820 (class 0 OID 24619)
+-- TOC entry 2827 (class 0 OID 24619)
 -- Dependencies: 196
 -- Data for Name: order; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -174,7 +200,7 @@ INSERT INTO public."order" VALUES (10002, '2022-07-01', 1001);
 
 
 --
--- TOC entry 2823 (class 0 OID 40998)
+-- TOC entry 2830 (class 0 OID 40998)
 -- Dependencies: 199
 -- Data for Name: orderItem; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -191,7 +217,7 @@ INSERT INTO public."orderItem" VALUES (10007, 1000);
 
 
 --
--- TOC entry 2821 (class 0 OID 24622)
+-- TOC entry 2828 (class 0 OID 24622)
 -- Dependencies: 197
 -- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -202,7 +228,17 @@ INSERT INTO public.patient VALUES (10002, 'Владимиров Владимир
 
 
 --
--- TOC entry 2834 (class 0 OID 0)
+-- TOC entry 2834 (class 0 OID 57417)
+-- Dependencies: 203
+-- Data for Name: session; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO public.session VALUES (1000, 'c819458a-bf0f-11ec-9d64-0242ac120002', 5, '2022-04-18 15:08:06');
+INSERT INTO public.session VALUES (1001, '749df1e5-b1e2-43c5-b362-ff32f73f4257', 5, '2022-04-22 04:03:00');
+
+
+--
+-- TOC entry 2843 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: medicineserviceidsequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -211,7 +247,7 @@ SELECT pg_catalog.setval('public.medicineserviceidsequence', 10008, true);
 
 
 --
--- TOC entry 2835 (class 0 OID 0)
+-- TOC entry 2844 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: orderidsequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -220,7 +256,7 @@ SELECT pg_catalog.setval('public.orderidsequence', 1003, false);
 
 
 --
--- TOC entry 2836 (class 0 OID 0)
+-- TOC entry 2845 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: patientidsequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -229,7 +265,16 @@ SELECT pg_catalog.setval('public.patientidsequence', 10004, false);
 
 
 --
--- TOC entry 2693 (class 2606 OID 24629)
+-- TOC entry 2846 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: sessionidsequence; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.sessionidsequence', 1001, true);
+
+
+--
+-- TOC entry 2700 (class 2606 OID 24629)
 -- Name: patient client_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -238,7 +283,7 @@ ALTER TABLE ONLY public.patient
 
 
 --
--- TOC entry 2695 (class 2606 OID 41023)
+-- TOC entry 2702 (class 2606 OID 41023)
 -- Name: medicineService medicineService_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -247,7 +292,7 @@ ALTER TABLE ONLY public."medicineService"
 
 
 --
--- TOC entry 2691 (class 2606 OID 41030)
+-- TOC entry 2698 (class 2606 OID 41030)
 -- Name: order order_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -256,7 +301,7 @@ ALTER TABLE ONLY public."order"
 
 
 --
--- TOC entry 2697 (class 2606 OID 41024)
+-- TOC entry 2704 (class 2606 OID 41024)
 -- Name: orderItem orderItem_medicineServiceId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -265,7 +310,7 @@ ALTER TABLE ONLY public."orderItem"
 
 
 --
--- TOC entry 2698 (class 2606 OID 41031)
+-- TOC entry 2705 (class 2606 OID 41031)
 -- Name: orderItem orderItem_orderId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -274,7 +319,7 @@ ALTER TABLE ONLY public."orderItem"
 
 
 --
--- TOC entry 2696 (class 2606 OID 24648)
+-- TOC entry 2703 (class 2606 OID 24648)
 -- Name: order order_patient_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -282,7 +327,7 @@ ALTER TABLE ONLY public."order"
     ADD CONSTRAINT order_patient_id_fkey FOREIGN KEY ("patientId") REFERENCES public.patient(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-04-14 01:52:41
+-- Completed on 2022-04-22 04:13:39
 
 --
 -- PostgreSQL database dump complete
