@@ -1,14 +1,18 @@
 package main.service;
 
+import main.model.Patient;
 import main.model.Session;
 import main.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class SessionService {
+
+    private final HashMap<String, Session> sessionCache = new HashMap<>();
 
     @Autowired
     private SessionRepository sessionRepository;
@@ -41,5 +45,9 @@ public class SessionService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public HashMap<String, Session> getSessionCache() {
+        return sessionCache;
     }
 }
