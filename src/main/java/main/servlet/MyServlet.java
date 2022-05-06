@@ -5,8 +5,8 @@ import main.model.Order;
 import main.model.Patient;
 import main.service.MedicineServiceService;
 import main.service.OrderService;
-import main.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.*;
 import org.xml.sax.SAXParseException;
 
@@ -41,13 +41,9 @@ public class MyServlet extends HttpServlet {
     private OrderService orderService;
 
     @Autowired
-    private PatientService patientService;
-
-    @Autowired
     private MedicineServiceService medicineServiceService;
 
     public static int ORDER_ID_START = 7;
-    public static int PATIENT_ID_START = 9;
     public static int MEDICINE_SERVICE_ID_START = 17;
 
     public static int OBJECT_ITEM_POSITION = 1;
@@ -71,14 +67,6 @@ public class MyServlet extends HttpServlet {
                     objectToXMLElement(order, ordersElement);
                 }
                 element.appendChild(ordersElement);
-            } else if (pathInfo.matches("/patient/\\d+")) {
-                objectToXMLElement(patientService.readPatientById(Integer.parseInt(pathInfo.substring(PATIENT_ID_START))), element);
-            } else if (pathInfo.matches("/patient")) {
-                Element patientsElement = element.getOwnerDocument().createElement("patients");
-                for (Patient patient : patientService.readAllPatients()) {
-                    objectToXMLElement(patient, patientsElement);
-                }
-                element.appendChild(patientsElement);
             } else if (pathInfo.matches("/medicineService/\\d+")) {
                 objectToXMLElement(medicineServiceService.readMedicineServiceById(Integer.parseInt(pathInfo.substring(MEDICINE_SERVICE_ID_START))), element);
             } else if (pathInfo.matches("/medicineService")) {
@@ -121,11 +109,6 @@ public class MyServlet extends HttpServlet {
                 XMLToObject(order, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
                 orderService.createOrder(order);
                 reader.close();
-            } else if (pathInfo.matches("/patient")) {
-                Patient patient = new Patient();
-                XMLToObject(patient, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
-                patientService.createPatient(patient);
-                reader.close();
             } else if (pathInfo.matches("/medicineService")) {
                 MedicineService medicineService = new MedicineService();
                 XMLToObject(medicineService, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
@@ -160,11 +143,6 @@ public class MyServlet extends HttpServlet {
                 XMLToObject(order, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
                 orderService.updateOrder(order, Integer.parseInt(pathInfo.substring(ORDER_ID_START)));
                 reader.close();
-            } else if (pathInfo.matches("/patient/\\d+")) {
-                Patient patient = new Patient();
-                XMLToObject(patient, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
-                patientService.updatePatient(patient, Integer.parseInt(pathInfo.substring(PATIENT_ID_START)));
-                reader.close();
             } else if (pathInfo.matches("/medicineService/\\d+")) {
                 MedicineService medicineService = new MedicineService();
                 XMLToObject(medicineService, rootNode.getChildNodes().item(OBJECT_ITEM_POSITION));
@@ -192,8 +170,6 @@ public class MyServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
             if (pathInfo.matches("/order/\\d+")) {
                 orderService.deleteOrder(Integer.parseInt(pathInfo.substring(ORDER_ID_START)));
-            } else if (pathInfo.matches("/patient/\\d+")) {
-                patientService.deletePatient(Integer.parseInt(pathInfo.substring(PATIENT_ID_START)));
             } else if (pathInfo.matches("/medicineService/\\d+")) {
                 medicineServiceService.deleteMedicineService(Integer.parseInt(pathInfo.substring(MEDICINE_SERVICE_ID_START)));
             } else {

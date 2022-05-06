@@ -2,11 +2,14 @@ package main.service;
 
 import main.model.Order;
 import main.model.OrderItem;
+import main.model.Patient;
 import main.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
@@ -14,12 +17,20 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    private final String PATIENT_URL = "http://localhost:8081/patient";
+
     public void createOrder(Order order) {
         orderRepository.insertOrder(order);
     }
 
     public List<Order> readAllOrders() {
-        return orderRepository.selectAllOrders();
+        RestTemplate restTemplate = new RestTemplate();
+        Map<Integer, Patient> patients = restTemplate.getForObject(PATIENT_URL, Map.class);
+        List<Order> orders = orderRepository.selectAllOrders();
+        for (Order order : orders) {
+            order.setPatient(patients.get(order.getPatientId()));
+        }
+        return orders;
     }
 
     public void deleteOrder(Integer id) {
@@ -35,6 +46,10 @@ public class OrderService {
     }
 
     public Order readOrderById(Integer id) {
-        return orderRepository.selectOrderById(id);
+        Order order = orderRepository.selectOrderById(id);
+        RestTemplate restTemplate = new RestTemplate();
+        Patient patient = restTemplate.getForObject(PATIENT_URL + "/" + order.getPatientId(), Patient.class);
+        order.setPatient(patient);
+        return order;
     }
 }

@@ -7,12 +7,6 @@
         <id property="id" column="id"/>
         <result property="patientId" column="patientId"/>
         <result property="date" column="date"/>
-        <association property="patient" javaType="main.model.Patient">
-            <id property="id" column="patientId"/>
-            <result property="name" column="patientName"/>
-            <result property="mail" column="mail"/>
-            <result property="password" column="password"/>
-        </association>
         <collection property="orderItems" ofType="main.model.OrderItem">
             <result property="orderId" column="id"/>
             <result property="medicineServiceId" column="medicineServiceId"/>
@@ -21,17 +15,13 @@
     <select id="selectAllOrders" resultMap="order">
         select
         "order"."patientId",
-        "patient"."name" as "patientName",
-        "mail",
-        "password",
         "date",
         "order"."id",
         "medicineService"."name",
         "orderItem"."medicineServiceId"
         from "order"
         join "orderItem" on "order"."id"="orderItem"."orderId"
-        join "medicineService" on "medicineServiceId"="medicineService"."id"
-        join "patient" on "order"."patientId" = "patient"."id";
+        join "medicineService" on "medicineServiceId"="medicineService"."id";
     </select>
     <insert id="insertOrder" parameterType="main.model.Order">
         <selectKey order="BEFORE" keyProperty="id" resultType="integer">
@@ -54,9 +44,6 @@
     <select id="selectOrderById" resultMap="order">
         select
         "order"."patientId",
-        "patient"."name" as "patientName",
-        "mail",
-        "password",
         "date",
         "order"."id",
         "medicineService"."name",
@@ -64,7 +51,6 @@
         from "order"
         join "orderItem" on "order"."id"="orderItem"."orderId"
         join "medicineService" on "medicineServiceId"="medicineService"."id"
-        join "patient" on "order"."patientId" = "patient"."id"
         where "order"."id"=#{id};
     </select>
 </mapper>
