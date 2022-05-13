@@ -1,6 +1,7 @@
 package main.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Patient {
 
@@ -84,5 +85,18 @@ public class Patient {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return Objects.equals(id, patient.id) && Objects.equals(firstName, patient.firstName) && Objects.equals(midName, patient.midName) && Objects.equals(lastName, patient.lastName) && Objects.equals(genderId, patient.genderId) && Objects.equals(birthday, patient.birthday) && Objects.equals(phone, patient.phone) && Objects.equals(email, patient.email) && Objects.equals(address, patient.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, midName, lastName, genderId, birthday, phone, email, address);
     }
 }
