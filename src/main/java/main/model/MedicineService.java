@@ -1,9 +1,25 @@
 package main.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "\"medicineService\"")
 public class MedicineService {
 
-    private Integer cost, id;
-    private String name, description, doctorSpecialistName;
+    @Id
+    private Integer id;
+
+    private Integer cost;
+
+    private String name;
+
+    private String description;
+
+    @Column(name = "\"doctorSpecialistName\"")
+    private String doctorSpecialistName;
 
     public Integer getId() {
         return id;

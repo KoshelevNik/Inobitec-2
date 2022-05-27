@@ -1,35 +1,18 @@
 package main.repository;
 
-import main.mapper.MedicineServiceMapper;
 import main.model.MedicineService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Repository
-public class MedicineServiceRepository {
+public interface MedicineServiceRepository extends JpaRepository<MedicineService, Integer> {
 
-    @Autowired
-    private MedicineServiceMapper medicineServiceMapper;
-
-    public void insertMedicineService(MedicineService medicineService) {
-        medicineServiceMapper.insertMedicineService(medicineService);
-    }
-
-    public void deleteMedicineService(Integer id) {
-        medicineServiceMapper.deleteMedicineService(id);
-    }
-
-    public void updateMedicineService(MedicineService medicineService) {
-        medicineServiceMapper.updateMedicineService(medicineService);
-    }
-
-    public List<MedicineService> selectAllMedicineServices() {
-        return medicineServiceMapper.selectAllMedicineServices();
-    }
-
-    public MedicineService selectMedicineServiceById(Integer id) {
-        return medicineServiceMapper.selectMedicineServiceById(id);
-    }
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO \"medicineService\" VALUES (?, ?, nextval('medicineServiceIdSequence'), ?, ?)", nativeQuery = true)
+    void insert(String name, Integer cost, String description, String doctorSpecialistName);
 }

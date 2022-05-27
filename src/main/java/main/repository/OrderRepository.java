@@ -1,35 +1,19 @@
 package main.repository;
 
-import main.mapper.OrderMapper;
 import main.model.Order;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.Date;
 
 @Repository
-public class OrderRepository {
+public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Autowired
-    private OrderMapper orderMapper;
-
-    public List<Order> selectAllOrders() {
-        return orderMapper.selectAllOrders();
-    }
-
-    public void insertOrder(Order order) {
-        orderMapper.insertOrder(order);
-    }
-
-    public void deleteOrder(Integer id) {
-        orderMapper.deleteOrder(id);
-    }
-
-    public void updateOrder(Order order) {
-        orderMapper.updateOrder(order);
-    }
-
-    public Order selectOrderById(Integer id) {
-        return orderMapper.selectOrderById(id);
-    }
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO \"order\" VALUES (?, ?, nextval('orderIdSequence'))", nativeQuery = true)
+    void insert(Integer patientId, Date date);
 }

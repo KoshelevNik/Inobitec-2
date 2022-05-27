@@ -1,8 +1,19 @@
 package main.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "\"orderItem\"")
 public class OrderItem {
 
-    private Integer medicineServiceId, orderId;
+    @Column(name = "\"medicineServiceId\"")
+    private Integer medicineServiceId;
+    @Id
+    @Column(name = "\"orderId\"")
+    private Integer orderId;
 
     public Integer getMedicineServiceId() {
         return medicineServiceId;

@@ -1,15 +1,23 @@
 package main.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "\"order\"")
 public class Order {
 
-    private Integer patientId, id;
+    @Column(name = "\"patientId\"")
+    private Integer patientId;
+    @Id
+    private Integer id;
     private Date date;
 
+    @Transient
     private List<OrderItem> orderItems;
 
+    @Transient
     private Patient patient;
 
     public Integer getPatientId() {
